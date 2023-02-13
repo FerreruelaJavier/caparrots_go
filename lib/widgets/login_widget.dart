@@ -43,6 +43,7 @@ class LoginWidget extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: (() {
+            Navigator.pushNamed(context, 'map');
             signIn();
           }),
           child: const Text('LOG IN'),

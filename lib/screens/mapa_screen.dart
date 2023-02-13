@@ -151,10 +151,11 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     final actual = Provider.of<CameraProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mapa'),
+        title: const Text('Mapa'),
         actions: [
           IconButton(
-              onPressed: () {
+            onPressed: () {
+              setState(() {
                 if (musicOn) {
                   musicOn = false;
                   player.stop();
@@ -163,12 +164,14 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
                   sonando = true;
                   sonarMusica(sonando);
                 }
-              },
-              icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute))
+              });
+            },
+            icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute),
+          )
         ],
       ),
       body: currentLocation == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                   color: Color.fromARGB(255, 245, 37, 37)),
             )
