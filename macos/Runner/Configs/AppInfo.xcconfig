@@ -1,0 +1,28 @@
+// Application-level settings for the Runner target.
+//
+// This may be replaced with something auto-generated from metadata (e.g., pubspec.yaml) in the
+// future. If not, the values below would default to using the project name when this becomes a
+// 'flutter create' template.
+
+// The application's name. By default this is also the title of the Flutter window.
+<<<<<<< HEAD
+PRODUCT_NAME = caparrots_go
+
+// The application's bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.example.caparrotsGo
+=======
+<<<<<<< HEAD
+PRODUCT_NAME = caparrots_initial
+
+// The application's bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.example.caparrotsInitial
+=======
+PRODUCT_NAME = test_de_cero
+
+// The application's bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.example.testDeCero
+>>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
+>>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+
+// The copyright displayed in application information
+PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.

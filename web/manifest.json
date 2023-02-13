@@ -1,0 +1,45 @@
+{
+<<<<<<< HEAD
+    "name": "caparrots_go",
+    "short_name": "caparrots_go",
+=======
+<<<<<<< HEAD
+    "name": "caparrots_initial",
+    "short_name": "caparrots_initial",
+=======
+    "name": "test_de_cero",
+    "short_name": "test_de_cero",
+>>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
+>>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A new Flutter project.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

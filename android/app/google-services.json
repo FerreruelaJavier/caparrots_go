@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "254394680180",
+    "project_id": "caparrots-ed3ff",
+    "storage_bucket": "caparrots-ed3ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254394680180:android:cd49b2b06f0f9393a6a221",
+        "android_client_info": {
+          "package_name": "com.example.caparrots_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGcozPwdsmJN-uQJZnLYXjIoH65nJvAIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
