@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         'Home': (context) => const HomeScreen(),
         'SignIn': (context) => const SignInScreen(),
         'SignUp': (context) => const SignUpScreen(),
-        'Caparrots': (context) => CaparrotWidget(),
+        'Caparrots': (context) => CaparrotScreen(),
         'map': (_) => MapaScreen(),
       },
       theme: ThemeData.light(),

@@ -14,13 +14,13 @@ import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:math';
 
-class CaparrotWidget extends StatefulWidget {
-  CaparrotWidget({Key? key}) : super(key: key);
+class CaparrotScreen extends StatefulWidget {
+  CaparrotScreen({Key? key}) : super(key: key);
   @override
   _CaparrotWidgetState createState() => _CaparrotWidgetState();
 }
 
-class _CaparrotWidgetState extends State<CaparrotWidget> {
+class _CaparrotWidgetState extends State<CaparrotScreen> {
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
