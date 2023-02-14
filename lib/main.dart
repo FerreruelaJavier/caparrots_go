@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: Utils.messengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Practica 4.1',
-      home: const HomeScreen(),
+      home: CaparrotScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
         'SignIn': (context) => const SignInScreen(),
