@@ -105,7 +105,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       }
     }
     bixo!.uri = "assets/untitled2.gltf";
-    bixo!.transformNotifier.notifyListeners();
+    bixo.transformNotifier.notifyListeners();
     setState(() {
     });
   }
