@@ -1,3 +1,4 @@
+import 'package:caparrots_initial/screens/shop_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
@@ -15,9 +16,14 @@ class SideMenu extends StatelessWidget {
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.settings_outlined),
-          title: const Text('Configuració'),
-          onTap: () {},
+          leading: const Icon(Icons.shop),
+          title: const Text('Tienda'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ShopScreen()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.logout),
