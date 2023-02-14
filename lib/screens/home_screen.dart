@@ -1,4 +1,3 @@
-import 'package:caparrots_initial/screens/map_screen.dart';
 import 'package:caparrots_initial/screens/mapa_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const MapScreen();
+            return const MapaScreen();
           } else {
             return const SignUpScreen();
           }

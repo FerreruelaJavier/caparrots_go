@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         'SignIn': (context) => const SignInScreen(),
         'SignUp': (context) => const SignUpScreen(),
         'Caparrots': (context) => CaparrotWidget(),
-        'map': (_) => MapScreen(),
+        'map': (_) => MapaScreen(),
       },
       theme: ThemeData.light(),
     );

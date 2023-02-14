@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../providers/camera_provider.dart';
 
@@ -20,7 +21,7 @@ class MapaScreen extends StatefulWidget {
 
 class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   void initState() {
-    getCurrentLocation();
+    // getCurrentLocation();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -32,7 +33,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     if (sonando) {
       sonando = false;
       loop();
-      player.play(AssetSource('prueba2.mp3'));
+      player.play(AssetSource('ina.mp3'));
     }
   }
 
@@ -43,22 +44,20 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  late AppLifecycleState appLifecycleState;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    appLifecycleState = state;
+    setState(() {});
     super.didChangeAppLifecycleState(state);
-    bool isBackground = false;
     if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.detached ||
-        state == AppLifecycleState.paused)
-      isBackground = true;
-    else {
-      isBackground = false;
+        state == AppLifecycleState.paused) {
+      player.pause();
     }
 
-    if (isBackground) {
-      player.stop();
-    } else {
-      sonando = true;
+    if (state == AppLifecycleState.resumed) {
+      player.resume();
     }
   }
 
@@ -70,7 +69,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   GoogleMapController? mapController;
   bool caparrotSpawned = false;
-  LocationData? currentLocation;
   CameraPosition _location =
       CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 17);
   late LatLng caparrotLocation;
@@ -100,6 +98,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     return randomLatLng;
   }
 
+/*
   void changeCamera(LocationData newLoc) async {
     GoogleMapController googleMapController = await _controller.future;
 
@@ -115,7 +114,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
       ),
     );
   }
-
   void getCurrentLocation() {
     Location location = Location();
 
@@ -143,7 +141,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
       },
     );
   }
-
+*/
   bool musicOn = true;
 
   @override
@@ -158,11 +156,11 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
               setState(() {
                 if (musicOn) {
                   musicOn = false;
-                  player.stop();
+                  player.pause();
                 } else {
                   musicOn = true;
-                  sonando = true;
-                  sonarMusica(sonando);
+
+                  player.resume();
                 }
               });
             },
@@ -170,42 +168,39 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
           )
         ],
       ),
-      body: currentLocation == null
+      body: /* currentLocation == null
           ? const Center(
               child: CircularProgressIndicator(
                   color: Color.fromARGB(255, 245, 37, 37)),
             )
-          : GoogleMap(
-              myLocationButtonEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                  zoom: 15),
-              markers: {
-                Marker(
-                  markerId: MarkerId("CurrentLocation"),
-                  position: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                ),
-                caparrotSpawned == true
-                    ? Marker(
-                        markerId: MarkerId("caparrot"),
-                        position: caparrotLocation)
-                    : Marker(markerId: MarkerId("invisible")),
-              },
-              onCameraMove: ((position) {
-                _location = position;
-              }),
-              onMapCreated: (mapCon) {
-                _controller.complete(mapCon);
-                player.stop();
-                sonando = true;
-                sonarMusica(sonando);
+          : */
+          GoogleMap(
+        myLocationButtonEnabled: true,
+        mapType: MapType.normal,
+        initialCameraPosition: _location,
+        /*markers: {
+          Marker(
+            markerId: MarkerId("CurrentLocation"),
+            position:
+                LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+          ),
+          caparrotSpawned == true
+              ? Marker(
+                  markerId: MarkerId("caparrot"), position: caparrotLocation)
+              : Marker(markerId: MarkerId("invisible")),
+        },
+        onCameraMove: ((position) {
+          _location = position;
+        }),*/
+        onMapCreated: (mapCon) {
+          _controller.complete(mapCon);
+          player.stop();
+          sonando = true;
+          sonarMusica(sonando);
 
-                setState(() {});
-              },
-            ),
+          setState(() {});
+        },
+      ),
     );
   }
 }
