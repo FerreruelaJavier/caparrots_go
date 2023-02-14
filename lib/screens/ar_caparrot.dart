@@ -10,13 +10,13 @@ import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
-import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:math';
 
 class CaparrotScreen extends StatefulWidget {
-  CaparrotScreen({Key? key}) : super(key: key);
+  const CaparrotScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _CaparrotWidgetState createState() => _CaparrotWidgetState();
 }
 
@@ -27,6 +27,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       scale: Vector3(0.2, 0.2, 0.2),
       position: Vector3(0.0, 0.0, 0.0),
       rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+  var huevo;
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -42,6 +43,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    poio.transformNotifier.addListener(() { });
     return Scaffold(
         appBar: AppBar(
           title: const Text('Object Transformation Gestures'),
@@ -70,7 +72,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
-    poio.transformNotifier.addListener(() { });
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arAnchorManager = arAnchorManager;
@@ -104,7 +105,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
         }
       }
     }
-    bixo!.uri = "assets/untitled2.gltf";
+    bixo!.transform.setTranslationRaw(10, 10, 10);
     bixo.transformNotifier.notifyListeners();
     setState(() {
     });
