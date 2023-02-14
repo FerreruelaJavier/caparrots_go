@@ -1,12 +1,10 @@
-import 'package:caparrots_initial/providers/camera_provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:caparrots_initial/providers/login_provider.dart';
 import 'package:caparrots_initial/screens/screens.dart';
 import 'package:caparrots_initial/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/mapa_screen.dart';
+import 'providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,10 +37,10 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
-        'SignIn': (context) => const SignInScreen(),
-        'SignUp': (context) => const SignUpScreen(),
-        'Caparrots': (context) => CaparrotWidget(),
-        'map': (_) => MapaScreen(),
+        'SignIn': (context) => SignInScreen(),
+        'SignUp': (context) => SignUpScreen(),
+        'Caparrots': (context) => const CaparrotScreen(),
+        'map': (_) => const MapaScreen(),
       },
       theme: ThemeData.light(),
     );
