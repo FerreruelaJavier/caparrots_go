@@ -27,6 +27,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       scale: Vector3(0.2, 0.2, 0.2),
       position: Vector3(0.0, 0.0, 0.0),
       rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+  var huevo;
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -42,6 +43,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var huevo = poio.transformNotifier.addListener(() { });
     return Scaffold(
         appBar: AppBar(
           title: const Text('Object Transformation Gestures'),
@@ -70,7 +72,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
-    poio.transformNotifier.addListener(() { });
+    var huevo = poio.transformNotifier.addListener(() { });
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arAnchorManager = arAnchorManager;
@@ -104,8 +106,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
         }
       }
     }
-    bixo!.uri = "assets/untitled2.gltf";
-    bixo!.transformNotifier.notifyListeners();
+    print(huevo);
     setState(() {
     });
   }
