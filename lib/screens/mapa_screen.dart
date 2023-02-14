@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:caparrots_initial/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -199,6 +197,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mapa'),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
@@ -213,10 +212,13 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
                 }
               });
             },
-            icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute),
+            icon: musicOn
+                ? const Icon(Icons.volume_up)
+                : const Icon(Icons.volume_mute),
           )
         ],
       ),
+      drawer: SideMenu(),
       body: currentLocation == null || currentLocation.latitude == null
           ? const Center(
               child: CircularProgressIndicator(
@@ -233,9 +235,9 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
                 markers.first,
                 caparrotSpawned == true
                     ? Marker(
-                        markerId: MarkerId("caparrot"),
+                        markerId: const MarkerId("caparrot"),
                         position: caparrotLocation)
-                    : Marker(markerId: MarkerId("invisible")),
+                    : const Marker(markerId: MarkerId("invisible")),
               },
               onCameraMove: ((position) {
                 _location = position;

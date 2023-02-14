@@ -10,13 +10,13 @@ import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
-import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:math';
 
 class CaparrotScreen extends StatefulWidget {
-  CaparrotScreen({Key? key}) : super(key: key);
+  const CaparrotScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _CaparrotWidgetState createState() => _CaparrotWidgetState();
 }
 

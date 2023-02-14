@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 
 class SideMenu extends StatelessWidget {
-  List valores = [];
-  List posiciones = [];
-  SideMenu(this.valores, this.posiciones, {super.key});
+  const SideMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +24,7 @@ class SideMenu extends StatelessWidget {
           title: const Text('Tencar sessió'),
           onTap: () {
             FirebaseAuth.instance.signOut();
+            Navigator.pushReplacementNamed(context, 'SignIn');
           },
         )
       ]),
