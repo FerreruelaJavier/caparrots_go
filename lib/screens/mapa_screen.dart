@@ -25,7 +25,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   CameraPosition _location =
       CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
   late LatLng caparrotLocation;
-  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   late Position currentLocation = Position(
       longitude: _location.target.longitude,
       latitude: _location.target.latitude,
@@ -39,7 +38,8 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    equalLocation();
+    localizacionPrueba();
+    /*getCurrentLocation();
     changeCamera(currentLocation);
     markers.clear();
     markers.add(Marker(
@@ -55,13 +55,52 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         }
       }
     });
-    _liveLocation();
+    _liveLocation();*/
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
-  void equalLocation() async {
-    currentLocation = await getCurrentLocation();
+  Future<Position> getUserCurrentLocation() async {
+    LocationPermission permission;
+    bool serviceEnabled;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Fluttertoast.showToast(msg: "Activa la localización");
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Fluttertoast.showToast(msg: "Localización actual no permitida");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Fluttertoast.showToast(
+          msg: 'Permisos de localización denegados indefinidamente');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void localizacionPrueba() async {
+    getUserCurrentLocation().then((value) async {
+      print(value.latitude.toString() + " " + value.longitude.toString());
+
+      CameraPosition cameraPosition = new CameraPosition(
+        target: LatLng(value.latitude, value.longitude),
+        zoom: 14,
+      );
+
+      markers.clear();
+      markers.add(Marker(
+          markerId: MarkerId("my current position"),
+          position: LatLng(value.latitude, value.longitude)));
+
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      setState(() {});
+    });
   }
 
   Set<Marker> getCaparrotList() {
@@ -103,7 +142,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     player.setReleaseMode(ReleaseMode.loop);
   }
 
-  Future<Position> getCurrentLocation() async {
+  void getCurrentLocation() async {
     LocationPermission permission;
     bool serviceEnabled;
 
@@ -124,7 +163,28 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
           msg: 'Permisos de localización denegados indefinidamente');
     }
     Position position = await Geolocator.getCurrentPosition();
-    return position;
+    currentLocation = position;
+
+    final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+    StreamSubscription<Position> positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position? positionU) {
+      print(positionU == null
+          ? 'Unknown'
+          : '${positionU.latitude.toString()}, ${positionU.longitude.toString()}');
+      currentLocation = Position(
+          longitude: positionU!.longitude!,
+          latitude: positionU!.latitude!,
+          timestamp: DateTime(2023),
+          accuracy: 100,
+          altitude: 14,
+          heading: 2,
+          speed: 2,
+          speedAccuracy: 2);
+    });
   }
 
   void _liveLocation() {
@@ -231,14 +291,15 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
                   target: LatLng(
                       currentLocation.latitude, currentLocation.longitude),
                   zoom: 15),
-              markers: {
+              markers: Set<Marker>.of(markers),
+              /*{
                 markers.first,
                 caparrotSpawned == true
                     ? Marker(
                         markerId: const MarkerId("caparrot"),
                         position: caparrotLocation)
                     : const Marker(markerId: MarkerId("invisible")),
-              },
+              },*/
               onCameraMove: ((position) {
                 _location = position;
               }),
