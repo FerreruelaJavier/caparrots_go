@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CalcetinesDisplay extends StatelessWidget {
-  const CalcetinesDisplay({super.key});
+class CalcetinesScreen extends StatelessWidget {
+  const CalcetinesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -41,7 +42,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -60,7 +62,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -74,7 +77,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -93,7 +97,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -107,7 +112,8 @@ class CalcetinesDisplay extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
@@ -121,7 +127,8 @@ class CalcetinesDisplay extends StatelessWidget {
               Column(
                 children: [
                   CircleAvatar(
-                    radius: 55.0,
+                    minRadius: 40.0,
+                    maxRadius: 55.5,
                     backgroundImage: NetworkImage(
                         "https://via.placeholder.com/100.png/04f/fff"),
                     backgroundColor: Colors.transparent,

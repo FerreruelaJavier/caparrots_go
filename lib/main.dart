@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         'Home': (context) => const HomeScreen(),
         'SignIn': (context) => SignInScreen(),
         'SignUp': (context) => SignUpScreen(),
+        'Calcetines': (context) => const CalcetinesScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
         'map': (_) => const MapaScreen(),
       },
