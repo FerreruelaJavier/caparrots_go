@@ -1,3 +1,5 @@
+import 'package:caparrots_initial/widgets/google_button.dart';
+import 'package:caparrots_initial/widgets/widgets.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +8,18 @@ import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import '../utils/utils.dart';
 
-class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+class LogInScreen extends StatefulWidget {
+  final Function()? onTap;
+  const LogInScreen({super.key, required this.onTap});
 
-  final TextEditingController _email = TextEditingController();
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
 
-  final TextEditingController _constrasena = TextEditingController();
+class _LogInScreenState extends State<LogInScreen> {
+  final _email = TextEditingController();
+
+  final _constrasena = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class SignInScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             const SizedBox(
-              height: 100,
+              height: 50,
             ),
             CircleAvatar(
               radius: 80,
@@ -44,37 +52,68 @@ class SignInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  width: 150,
+                  width: 180,
                 ),
                 TextButton(
                   onPressed: () {
-                    FirebaseAuth.instance
-                        .sendPasswordResetEmail(email: _email.text.trim());
+                    Navigator.pushNamed(context, '');
                   },
-                  child: const Text('Forgot Password?'),
+                  child: const Text('Contrasenya perduda?'),
                 )
               ],
             ),
-            ElevatedButton(
-              onPressed: (() {
-                signIn();
-              }),
-              child: const Text('LOG IN'),
+            MyButton(onTap: signIn),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Row(
+                children: const [
+                  Expanded(
+                    child: Divider(
+                      thickness: 0.5,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      'Continuar amb',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      thickness: 0.5,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
             ),
             const SizedBox(
-              height: 120,
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [const GoogleButton()],
+            ),
+            const SizedBox(
+              height: 50,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'No tienes cuenta?',
+                  'No tens compte?',
                   style: TextStyle(color: Colors.black),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'SignUp');
-                  },
+                const SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: widget.onTap,
                   child: const Text(
                     'Clica aqui!!',
                     style: TextStyle(
@@ -91,19 +130,19 @@ class SignInScreen extends StatelessWidget {
 
   Widget fieldEmail() {
     return SizedBox(
-      width: 350,
+      width: 340,
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: _email,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (email) => email != null && EmailValidator.validate(email)
             ? null
-            : 'Introduce un email valido',
+            : 'Introdueix un email valid',
         decoration: InputDecoration(
           labelText: 'Email',
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black, width: 10),
-            borderRadius: BorderRadius.circular(50.0),
+            borderRadius: BorderRadius.circular(8),
           ),
           filled: true,
           fillColor: Colors.white,
@@ -116,19 +155,19 @@ class SignInScreen extends StatelessWidget {
     final passwProvider = Provider.of<LoginProvider>(context);
 
     return SizedBox(
-      width: 350,
+      width: 340,
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (valor) => valor != null && valor.length < 6
-            ? 'Introduce un minímo de 6 caracteres'
+            ? 'Introdueix un minim de 6 caracters'
             : null,
         controller: _constrasena,
         obscureText: passwProvider.password,
         decoration: InputDecoration(
-          labelText: 'Contraseña',
+          labelText: 'Contrasenya',
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black, width: 10),
-            borderRadius: BorderRadius.circular(50.0),
+            borderRadius: BorderRadius.circular(8),
           ),
           suffixIcon: IconButton(
             icon: Icon(passwProvider.password
@@ -145,12 +184,19 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
+  @override
+  void dispose() {
+    _email.dispose();
+    _constrasena.dispose();
+    super.dispose();
+  }
+
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _email.text.trim(), password: _constrasena.text.trim());
     } on FirebaseAuthException {
-      Utils.showSnackBar("El email o la contraseña no son correctos");
+      Utils.showSnackBar("El email o la contraseña no son correctes");
     }
   }
 }
