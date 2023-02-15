@@ -39,8 +39,6 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
-        'SignIn': (context) => SignInScreen(),
-        'SignUp': (context) => SignUpScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
         'Calcetin': (context) => const CalcetinesScreen(),
         'Settings': (context) => SettingsScreen(),
