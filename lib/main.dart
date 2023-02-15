@@ -5,6 +5,8 @@ import 'package:caparrots_initial/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'providers/providers.dart';
+import 'screens/calcetines_screen.dart';
+import 'screens/settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +43,13 @@ class MyApp extends StatelessWidget {
         'SignUp': (context) => SignUpScreen(),
         'Calcetines': (context) => const CalcetinesScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
+<<<<<<< Updated upstream
         'map': (_) => const MapaScreen(),
+=======
+        'Map': (context) => const MapaScreen(),
+        'Calcetin': (context) => const CalcetinesScreen(),
+        'Settings': (context) => SettingsScreen(),
+>>>>>>> Stashed changes
       },
       theme: ThemeData.light(),
     );
