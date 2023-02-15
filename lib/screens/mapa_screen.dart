@@ -187,7 +187,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     if (sonando) {
       sonando = false;
       loop();
-      player.play(AssetSource('prueba2.mp3'));
+      player.play(AssetSource('ina.mp3'));
     }
   }
 

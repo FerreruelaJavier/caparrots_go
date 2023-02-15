@@ -41,15 +41,10 @@ class MyApp extends StatelessWidget {
         'Home': (context) => const HomeScreen(),
         'SignIn': (context) => SignInScreen(),
         'SignUp': (context) => SignUpScreen(),
-        'Calcetines': (context) => const CalcetinesScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
-<<<<<<< Updated upstream
-        'map': (_) => const MapaScreen(),
-=======
-        'Map': (context) => const MapaScreen(),
         'Calcetin': (context) => const CalcetinesScreen(),
         'Settings': (context) => SettingsScreen(),
->>>>>>> Stashed changes
+        'Map': (context) => const MapaScreen(),
       },
       theme: ThemeData.light(),
     );
