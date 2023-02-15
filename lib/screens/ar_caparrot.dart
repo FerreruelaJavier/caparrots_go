@@ -21,6 +21,13 @@ class CaparrotScreen extends StatefulWidget {
 }
 
 class _CaparrotWidgetState extends State<CaparrotScreen> {
+  var poio = ARNode(
+      type: NodeType.localGLTF2,
+      uri: "assets/Chicken_01/Chicken_01.gltf",
+      scale: Vector3(0.2, 0.2, 0.2),
+      position: Vector3(0.0, 0.0, 0.0),
+      rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+  var huevo;
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -36,6 +43,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var huevo = poio.transformNotifier.addListener(() { });
     return Scaffold(
         appBar: AppBar(
           title: const Text('Object Transformation Gestures'),
@@ -64,6 +72,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
+    var huevo = poio.transformNotifier.addListener(() { });
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arAnchorManager = arAnchorManager;
@@ -85,6 +94,21 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     this.arObjectManager!.onRotationStart = onRotationStarted;
     this.arObjectManager!.onRotationChange = onRotationChanged;
     this.arObjectManager!.onRotationEnd = onRotationEnded;
+    this.arObjectManager!.onNodeTap = onNodeTap;
+  }
+
+  void onNodeTap(List<String> cosos){
+    ARNode? bixo;
+    for (var element in cosos) {
+      for (var nodo in nodes){
+        if (element == nodo.name){
+          bixo = nodo;
+        }
+      }
+    }
+    print(huevo);
+    setState(() {
+    });
   }
 
   Future<void> onRemoveEverything() async {
@@ -108,17 +132,11 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       if (didAddAnchor!) {
         this.anchors.add(newAnchor);
         // Add note to anchor
-        var newNode = ARNode(
-            type: NodeType.localGLTF2,
-            uri: "assets/Chicken_01/Chicken_01.gltf",
-            scale: Vector3(0.2, 0.2, 0.2),
-            position: Vector3(0.0, 0.0, 0.0),
-            rotation: Vector4(1.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor = await this
             .arObjectManager!
-            .addNode(newNode, planeAnchor: newAnchor);
+            .addNode(poio, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {
-          this.nodes.add(newNode);
+          this.nodes.add(poio);
         } else {
           this.arSessionManager!.onError("Adding Node to Anchor failed");
         }
