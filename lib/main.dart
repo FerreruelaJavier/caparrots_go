@@ -37,10 +37,8 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
-        'SignIn': (context) => SignInScreen(),
-        'SignUp': (context) => SignUpScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
-        'map': (_) => const MapaScreen(),
+        'Map': (context) => const MapaScreen(),
       },
       theme: ThemeData.light(),
     );

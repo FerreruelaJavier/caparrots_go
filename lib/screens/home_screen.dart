@@ -1,3 +1,4 @@
+import 'package:caparrots_initial/screens/login_or_register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'screens.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           if (snapshot.hasData) {
             return const MapaScreen();
           } else {
-            return SignInScreen();
+            return const LoginOrRegiserPage();
           }
         },
       ),
