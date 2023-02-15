@@ -17,9 +17,9 @@ class SideMenu extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.tornado_sharp),
-          title: const Text('Calcetin'),
+          title: const Text('Calcetines'),
           onTap: () {
-            Navigator.pushReplacementNamed(context, 'Calcetines');
+            Navigator.pushNamed(context, 'Calcetin');
           },
         ),
         ListTile(
