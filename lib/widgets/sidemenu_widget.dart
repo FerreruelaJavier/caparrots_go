@@ -19,8 +19,7 @@ class SideMenu extends StatelessWidget {
           leading: const Icon(Icons.tornado_sharp),
           title: const Text('Calcetines'),
           onTap: () {
-            FirebaseAuth.instance.signOut();
-            Navigator.pushReplacementNamed(context, 'Calcetines');
+            Navigator.pushNamed(context, 'Calcetin');
           },
         ),
         ListTile(
