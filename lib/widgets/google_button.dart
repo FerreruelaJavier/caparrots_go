@@ -15,7 +15,7 @@ class GoogleButton extends StatelessWidget {
       height: 60,
       child: GestureDetector(
         onTap: (() {
-          _googleSignIn();
+          _googleSignIn(context);
         }),
         child: Image.asset('assets/logo_google.png'),
       ),
@@ -23,11 +23,15 @@ class GoogleButton extends StatelessWidget {
   }
 }
 
-_googleSignIn() async {
+_googleSignIn(context) async {
   GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
   GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-  AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-  UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
+  try {
+    AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+  } on FirebaseAuthException catch (error) {
+    Utils.showSnackBar("No funciono correctamente");
+  }
 }
