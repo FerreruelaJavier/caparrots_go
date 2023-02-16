@@ -1,6 +1,3 @@
-import 'package:caparrots_initial/screens/home_screen.dart';
-import 'package:caparrots_initial/screens/login_screen.dart';
-import 'package:caparrots_initial/screens/mapa_screen.dart';
 import 'package:caparrots_initial/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
