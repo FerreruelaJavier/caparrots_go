@@ -5,7 +5,6 @@ import 'package:caparrots_initial/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'providers/providers.dart';
-import 'screens/calcetines_screen.dart';
 import 'screens/settings.dart';
 
 void main() async {
@@ -20,6 +19,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => CameraProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FireBaseProvider(),
         )
       ],
       child: const MyApp(),
