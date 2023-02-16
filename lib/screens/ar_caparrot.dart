@@ -114,6 +114,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       final newTransform = Matrix4.identity();
 
       newTransform.scale(Random().nextDouble() + 0.3);
+      newTransform.rotateZ(Random().nextDouble());
 
       bixo!.transform = newTransform;
       bixo.transformNotifier.notifyListeners();
