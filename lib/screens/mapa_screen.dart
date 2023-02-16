@@ -19,13 +19,23 @@ class MapaScreen extends StatefulWidget {
 
 class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   bool sonando = true;
-  Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   bool caparrotSpawned = false;
   CameraPosition _location =
       CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
   late LatLng caparrotLocation;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
+  bool exists = false;
 
+  late GoogleMapController googleMapController;
+
+  static const CameraPosition initialCameraPosition =
+      CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
+
+  Set<Marker> markers = {};
+  LocationSettings ls =
+      LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
+
+/*
   @override
   void initState() {
     setState(() {
@@ -43,6 +53,72 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+*/
+
+  @override
+  void initState() {
+    Geolocator.getPositionStream(locationSettings: ls).listen((location) {
+      inicial();
+    });
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  void inicial() async {
+    Position position = await _determinePosition();
+    if (activo) cameraWork(position);
+
+    Marker current = Marker(
+        markerId: const MarkerId("current location"),
+        position: LatLng(position.latitude, position.longitude));
+
+    markers.add(current);
+
+    setState(() {});
+  }
+
+  bool activo = true;
+
+  void cameraWork(Position position) {
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          zoom: 15,
+          target: LatLng(
+            position.latitude,
+            position.longitude,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<Position> _determinePosition() async {
+    LocationPermission permission;
+    bool serviceEnabled;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error("Activa la localización");
+    }
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error("Localización actual no permitida");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error("Permisos de localización denegados indefinidamente");
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+
+    return position;
   }
 
   Set<Marker> getCaparrotList() {
@@ -84,29 +160,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     player.setReleaseMode(ReleaseMode.loop);
   }
 
-  void getCurrentLocation() async {
-    LocationPermission permission;
-    bool serviceEnabled;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Fluttertoast.showToast(msg: "Activa la localización");
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Fluttertoast.showToast(msg: "Localización actual no permitida");
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(
-          msg: 'Permisos de localización denegados indefinidamente');
-    }
-    //_currentLocation = await Geolocator.getCurrentPosition();
-  }
-
   LatLng getRandomLocation(LatLng point, int radius) {
     double x0 = point.latitude;
     double y0 = point.longitude;
@@ -129,22 +182,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
 
     return randomLatLng;
-  }
-
-  void changeCamera(Position newLoc) async {
-    GoogleMapController googleMapController = await _controller.future;
-
-    googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          zoom: 15,
-          target: LatLng(
-            newLoc.latitude,
-            newLoc.longitude,
-          ),
-        ),
-      ),
-    );
   }
 
   bool musicOn = true;
@@ -187,38 +224,26 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         ],
       ),
       drawer: SideMenu(),
-      body: _position == null
-          ? const Center(
-              child: CircularProgressIndicator(
-                  color: Color.fromARGB(255, 245, 37, 37)),
-            )
-          : GoogleMap(
-              myLocationButtonEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(_position.latitude, _position.longitude),
-                zoom: 14.4746,
-              ),
-              markers: Set<Marker>.of(markers.values),
-              /*markers: {
-                markers.first,
-                caparrotSpawned == true
-                    ? Marker(
-                        markerId: const MarkerId("caparrot"),
-                        position: caparrotLocation)
-                    : const Marker(markerId: MarkerId("invisible")),
-              },*/
-              onCameraMove: ((position) {
-                _location = position;
-              }),
-              onMapCreated: (mapCon) {
-                _controller.complete(mapCon);
-                mapController = mapCon;
-                player.stop();
-                sonarMusica(sonando);
-                setState(() {});
-              },
-            ),
+      body: GoogleMap(
+          initialCameraPosition: initialCameraPosition,
+          markers: markers,
+          zoomControlsEnabled: false,
+          mapType: MapType.normal,
+          onMapCreated: (GoogleMapController controller) {
+            googleMapController = controller;
+            player.stop();
+            sonarMusica(sonando);
+            setState(() {});
+          }),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.control_camera_sharp),
+        onPressed: () {
+          if (activo)
+            activo = false;
+          else
+            activo = true;
+        },
+      ),
     );
   }
 }
