@@ -21,13 +21,13 @@ class CaparrotScreen extends StatefulWidget {
 }
 
 class _CaparrotWidgetState extends State<CaparrotScreen> {
+  
   var poio = ARNode(
       type: NodeType.localGLTF2,
       uri: "assets/Chicken_01/Chicken_01.gltf",
       scale: Vector3(0.2, 0.2, 0.2),
       position: Vector3(0.0, 0.0, 0.0),
       rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-  var huevo;
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -80,7 +80,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
           showFeaturePoints: false,
           showPlanes: true,
           customPlaneTexturePath: "assets/triangle.png",
-          showWorldOrigin: false,
+          showWorldOrigin: true,
           handlePans: true,
           handleRotation: true,
         );
@@ -94,6 +94,12 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     this.arObjectManager!.onRotationChange = onRotationChanged;
     this.arObjectManager!.onRotationEnd = onRotationEnded;
     this.arObjectManager!.onNodeTap = onNodeTap;
+
+    hacer_poio();
+  }
+
+  void hacer_poio() async{
+    print(poio.transform.getRotation().dimension);
   }
 
   void onNodeTap(List<String> cosos){
@@ -105,10 +111,15 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
         }
       }
     }
-    bixo!.transform.setTranslationRaw(10, 10, 10);
-    bixo.transformNotifier.notifyListeners();
-    setState(() {
+      final newTransform = Matrix4.identity();
+
+      newTransform.scale(Random().nextDouble() + 0.3);
+
+      bixo!.transform = newTransform;
+      bixo.transformNotifier.notifyListeners();
+      setState(() {
     });
+    
   }
 
   Future<void> onRemoveEverything() async {
@@ -123,6 +134,9 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
+    final stand = Matrix4.identity();
+    stand.scale(0.3);
+    poio.transform = stand;
     var singleHitTestResult = hitTestResults.firstWhere(
         (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
     if (singleHitTestResult != null) {
