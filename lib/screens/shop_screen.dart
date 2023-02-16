@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ShopScreen extends StatefulWidget {
+  const ShopScreen({Key? key}) : super(key: key);
+
   @override
   _ShopScreenState createState() => _ShopScreenState();
 }
@@ -10,7 +12,7 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tienda de Sa Pobla"),
+        title: Text("Tenda de Sa Pobla"),
         actions: <Widget>[
           FloatingActionButton(
             child: Icon(Icons.monetization_on),
@@ -19,8 +21,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Dinero Actual"),
-                    content: Text("Tienes 0 CapaCoins"), // actualizar monedas
+                    title: Text("Doblers Actual"),
+                    content: Text("Tens 0 Dolarrots"), // actualizar monedas
                     actions: <Widget>[
                       TextButton(
                         child: Text("OK"),
@@ -48,8 +50,8 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
           ListTile(
             leading: Icon(Icons.sticky_note_2_sharp),
-            title: Text("Baston Caparrot"),
-            subtitle: Text("20 de daño"),
+            title: Text("Bastó Caparrot"),
+            subtitle: Text("20 de mal"),
             trailing: Container(
               width: 100,
               child: Column(
@@ -62,7 +64,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           return AlertDialog(
                             title: Text("Confirmar compra"),
                             content: Text(
-                                "El articulo vale 20 CapaCoins, confirmar compra?"),
+                                "L'article val 20 Dolarrots, confirmar compra?"),
                             actions: <Widget>[
                               TextButton(
                                 child: Text("Cancelar"),
@@ -108,7 +110,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           return AlertDialog(
                             title: Text("Confirmar compra"),
                             content: Text(
-                                "El articulo vale 20 CapaCoins, confirmar compra?"),
+                                "L'article val 20 Dolarrots, confirmar compra?"),
                             actions: <Widget>[
                               TextButton(
                                 child: Text("Cancelar"),
@@ -154,7 +156,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           return AlertDialog(
                             title: Text("Confirmar compra"),
                             content: Text(
-                                "El articulo vale 40 CapaCoins, confirmar compra?"),
+                                "L'article val 40 Dolarrots, confirmar compra?"),
                             actions: <Widget>[
                               TextButton(
                                 child: Text("Cancelar"),
@@ -186,8 +188,8 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
           ListTile(
             leading: Icon(Icons.stairs_sharp),
-            title: Text("Super Baston Caparrot"),
-            subtitle: Text("40 de ataque"),
+            title: Text("Super Bastó Caparrot"),
+            subtitle: Text("40 d'atac"),
             trailing: Container(
               width: 100,
               child: Column(
@@ -200,7 +202,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           return AlertDialog(
                             title: Text("Confirmar compra"),
                             content: Text(
-                                "El articulo vale 40 CapaCoins, confirmar compra?"),
+                                "L'article val 40 Dolarrots, confirmar compra?"),
                             actions: <Widget>[
                               TextButton(
                                 child: Text("Cancelar"),
@@ -233,7 +235,7 @@ class _ShopScreenState extends State<ShopScreen> {
           ListTile(
             leading: Icon(Icons.question_mark),
             title: Text("LootBox"),
-            subtitle: Text("Buena Suerte Bro"),
+            subtitle: Text("Bona Sort Jove"),
             trailing: Container(
               width: 100,
               child: Column(
@@ -246,7 +248,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           return AlertDialog(
                             title: Text("Confirmar compra"),
                             content: Text(
-                                "El articulo vale 100 CapaCoins, confirmar compra?"),
+                                "L'article val 100 Dolarrots, confirmar compra?"),
                             actions: <Widget>[
                               TextButton(
                                 child: Text("Cancelar"),

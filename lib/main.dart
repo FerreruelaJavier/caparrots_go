@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:caparrots_initial/screens/shop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:caparrots_initial/screens/screens.dart';
 import 'package:caparrots_initial/utils/utils.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         'Calcetin': (context) => const CalcetinesScreen(),
         'Settings': (context) => SettingsScreen(),
         'Map': (context) => const MapaScreen(),
+        'Tenda': (context) => const ShopScreen(),
       },
     );
   }
