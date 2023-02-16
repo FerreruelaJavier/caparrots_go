@@ -20,32 +20,18 @@ class MapaScreen extends StatefulWidget {
 class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   bool sonando = true;
   Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-  GoogleMapController? mapController;
   bool caparrotSpawned = false;
   CameraPosition _location =
       CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
   late LatLng caparrotLocation;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
-  late Position currentLocation = Position(
-      longitude: _location.target.longitude,
-      latitude: _location.target.latitude,
-      timestamp: DateTime(2023),
-      accuracy: 100,
-      altitude: 15,
-      heading: 12,
-      speed: 2,
-      speedAccuracy: 2);
-  Set<Marker> markers = {};
 
   @override
   void initState() {
-    equalLocation();
-    changeCamera(currentLocation);
-    markers.clear();
-    markers.add(Marker(
-        markerId: const MarkerId('currentLocation'),
-        position: LatLng(currentLocation.latitude, currentLocation.longitude)));
     setState(() {
+      getCurrentLocation();
+      //changeCamera(currentLocation);
+
       if (!caparrotSpawned) {
         Random spawn = new Random();
         if (spawn.nextInt(100) <= 10) {
@@ -55,13 +41,8 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         }
       }
     });
-    _liveLocation();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-  }
-
-  void equalLocation() async {
-    currentLocation = await getCurrentLocation();
   }
 
   Set<Marker> getCaparrotList() {
@@ -103,7 +84,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     player.setReleaseMode(ReleaseMode.loop);
   }
 
-  Future<Position> getCurrentLocation() async {
+  void getCurrentLocation() async {
     LocationPermission permission;
     bool serviceEnabled;
 
@@ -123,20 +104,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
       Fluttertoast.showToast(
           msg: 'Permisos de localización denegados indefinidamente');
     }
-    Position position = await Geolocator.getCurrentPosition();
-    return position;
-  }
-
-  void _liveLocation() {
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
-
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position position) {
-      setState(() {});
-    });
+    //_currentLocation = await Geolocator.getCurrentPosition();
   }
 
   LatLng getRandomLocation(LatLng point, int radius) {
@@ -219,7 +187,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         ],
       ),
       drawer: SideMenu(),
-      body: currentLocation == null || currentLocation.latitude == null
+      body: _position == null
           ? const Center(
               child: CircularProgressIndicator(
                   color: Color.fromARGB(255, 245, 37, 37)),
@@ -228,22 +196,24 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
               myLocationButtonEnabled: true,
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      currentLocation.latitude, currentLocation.longitude),
-                  zoom: 15),
-              markers: {
+                target: LatLng(_position.latitude, _position.longitude),
+                zoom: 14.4746,
+              ),
+              markers: Set<Marker>.of(markers.values),
+              /*markers: {
                 markers.first,
                 caparrotSpawned == true
                     ? Marker(
                         markerId: const MarkerId("caparrot"),
                         position: caparrotLocation)
                     : const Marker(markerId: MarkerId("invisible")),
-              },
+              },*/
               onCameraMove: ((position) {
                 _location = position;
               }),
               onMapCreated: (mapCon) {
                 _controller.complete(mapCon);
+                mapController = mapCon;
                 player.stop();
                 sonarMusica(sonando);
                 setState(() {});
