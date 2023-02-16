@@ -36,6 +36,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final esValid = _key.currentState!.validate();
     if (!esValid) return;
 
+    showDialog(
+        context: context,
+        builder: (context) => const CircularProgressIndicator());
+
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _email.text.trim(), password: _constrasena.text.trim());
@@ -126,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return null;
         },
         decoration: InputDecoration(
-          labelText: 'Nombre d\'usuari',
+          labelText: 'Nom d\'usuari',
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(8),

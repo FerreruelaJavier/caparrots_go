@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         'Settings': (context) => SettingsScreen(),
         'Map': (context) => const MapaScreen(),
       },
-      theme: ThemeData.light(),
     );
   }
 }
