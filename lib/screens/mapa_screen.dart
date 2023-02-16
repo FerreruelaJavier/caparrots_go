@@ -35,6 +35,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   Set<Marker> markers = {};
   LocationSettings ls =
       LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
 /*
   @override
@@ -59,12 +60,25 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    addCustomIcon();
     Geolocator.getPositionStream(locationSettings: ls).listen((location) {
       inicial();
       setState(() {});
     });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(), "assets/axel.jpg")
+        .then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
   }
 
   void inicial() async {
@@ -80,8 +94,9 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     if (activo) cameraWork(position);
 
     Marker current = Marker(
-        markerId: const MarkerId("current location"),
-        position: LatLng(position.latitude, position.longitude));
+      markerId: const MarkerId("current location"),
+      position: LatLng(position.latitude, position.longitude),
+    );
     markers.clear();
     markers.add(current);
 
