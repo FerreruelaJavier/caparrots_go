@@ -9,6 +9,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/camera_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MapaScreen extends StatefulWidget {
   const MapaScreen({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
 
   static const CameraPosition initialCameraPosition =
       CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
-
+  late Position a;
   Set<Marker> markers = {};
   LocationSettings ls =
       LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
@@ -60,19 +61,28 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   void initState() {
     Geolocator.getPositionStream(locationSettings: ls).listen((location) {
       inicial();
+      setState(() {});
     });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   void inicial() async {
+    var stat = await Permission.location.status;
+    if (await Permission.location.serviceStatus.isDisabled ||
+        stat.isDenied ||
+        stat.isRestricted) {
+      Map<Permission, PermissionStatus> status =
+          await [Permission.location].request();
+    }
+
     Position position = await _determinePosition();
     if (activo) cameraWork(position);
 
     Marker current = Marker(
         markerId: const MarkerId("current location"),
         position: LatLng(position.latitude, position.longitude));
-
+    markers.clear();
     markers.add(current);
 
     setState(() {});
@@ -97,14 +107,15 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   Future<Position> _determinePosition() async {
     LocationPermission permission;
     bool serviceEnabled;
-
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
       return Future.error("Activa la localización");
     }
     permission = await Geolocator.checkPermission();
-
+    if (permission == LocationPermission.unableToDetermine) {
+      permission = await Geolocator.requestPermission();
+    }
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
@@ -117,6 +128,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     }
 
     Position position = await Geolocator.getCurrentPosition();
+    setState(() {});
 
     return position;
   }
@@ -231,6 +243,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             googleMapController = controller;
+            inicial();
             player.stop();
             sonarMusica(sonando);
             setState(() {});
