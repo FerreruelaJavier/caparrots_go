@@ -10,6 +10,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/camera_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 class MapaScreen extends StatefulWidget {
   const MapaScreen({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   late LatLng caparrotLocation;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   bool exists = false;
+  late String _mapStyle;
 
   late GoogleMapController googleMapController;
 
@@ -35,32 +39,14 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   Set<Marker> markers = {};
   LocationSettings ls =
       LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
-/*
-  @override
-  void initState() {
-    setState(() {
-      getCurrentLocation();
-      //changeCamera(currentLocation);
-
-      if (!caparrotSpawned) {
-        Random spawn = new Random();
-        if (spawn.nextInt(100) <= 10) {
-          print("Ha spawneado un caparrot");
-          caparrotLocation = getRandomLocation(LatLng(39.769416, 3.024395), 60);
-          caparrotSpawned = true;
-        }
-      }
-    });
-    WidgetsBinding.instance.addObserver(this);
-    super.initState();
-  }
-*/
+  late BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   @override
   void initState() {
     addCustomIcon();
+    rootBundle.loadString('assets/style/styleMap.txt').then((string) {
+      _mapStyle = string;
+    });
     Geolocator.getPositionStream(locationSettings: ls).listen((location) {
       inicial();
       setState(() {});
@@ -69,16 +55,34 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     super.initState();
   }
 
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), "assets/axel.jpg")
-        .then(
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(
+      String path, int width) async {
+    final Uint8List imageData = await getBytesFromAsset(path, width);
+    return BitmapDescriptor.fromBytes(imageData);
+  }
+
+  void addCustomIcon() async {
+    final icon = await getBitmapDescriptorFromAssetBytes("assets/axel.jpg", 70);
+    setState(() {
+      markerIcon = icon;
+    });
+    /*BitmapDescriptor.fromAssetImage("assets/axel.jpg").then(
       (icon) {
         setState(() {
           markerIcon = icon;
         });
       },
-    );
+    );*/
   }
 
   void inicial() async {
@@ -94,9 +98,10 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     if (activo) cameraWork(position);
 
     Marker current = Marker(
-      markerId: const MarkerId("current location"),
-      position: LatLng(position.latitude, position.longitude),
-    );
+        markerId: const MarkerId("current location"),
+        position: LatLng(position.latitude, position.longitude),
+        infoWindow: const InfoWindow(title: "Yo"),
+        icon: markerIcon);
     markers.clear();
     markers.add(current);
 
@@ -109,7 +114,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          zoom: 15,
+          zoom: 20,
           target: LatLng(
             position.latitude,
             position.longitude,
@@ -228,8 +233,9 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     final actual = Provider.of<CameraProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mapa'),
+        title: const Text('Troba caparrots'),
         centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 143, 27, 1),
         actions: [
           IconButton(
             onPressed: () {
@@ -252,6 +258,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
       ),
       drawer: SideMenu(),
       body: GoogleMap(
+          indoorViewEnabled: true,
           initialCameraPosition: initialCameraPosition,
           markers: markers,
           zoomControlsEnabled: false,
@@ -260,6 +267,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
             googleMapController = controller;
             inicial();
             player.stop();
+            googleMapController.setMapStyle(_mapStyle);
             sonarMusica(sonando);
             setState(() {});
           }),
