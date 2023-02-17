@@ -1,2 +1,2 @@
-export 'package:caparrots_initial/widgets/register_widget.dart';
-export 'package:caparrots_initial/widgets/login_widget.dart';
+export 'package:caparrots_initial/widgets/button.dart';
+export 'package:caparrots_initial/widgets/sidemenu_widget.dart';

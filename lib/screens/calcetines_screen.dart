@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CalcetinesDisplay extends StatelessWidget {
-  const CalcetinesDisplay({super.key});
+class CalcetinesScreen extends StatelessWidget {
+  const CalcetinesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -25,61 +25,30 @@ class CalcetinesDisplay extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Column(
-                      children: [
+                      children: const [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
                         ),
-                        Text('Calcetin 1')
+                        Text('Mitjó 1')
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(23.0),
                     child: Column(
-                      children: [
+                      children: const [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
                         ),
-                        Text('Calcetin 2')
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(23.0),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 55.0,
-                          backgroundImage: NetworkImage(
-                              "https://via.placeholder.com/100.png/04f/fff"),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        Text('Calcetin 3')
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(23.0),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 55.0,
-                          backgroundImage: NetworkImage(
-                              "https://via.placeholder.com/100.png/04f/fff"),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        Text('Calcetin 4')
+                        Text('Mitjó 2')
                       ],
                     ),
                   ),
@@ -91,45 +60,83 @@ class CalcetinesDisplay extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(23.0),
                     child: Column(
-                      children: [
+                      children: const [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
                         ),
-                        Text('Calcetin 5')
+                        Text('Mitjó 3')
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(23.0),
                     child: Column(
-                      children: [
+                      children: const [
                         CircleAvatar(
-                          radius: 55.0,
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
                           backgroundImage: NetworkImage(
                               "https://via.placeholder.com/100.png/04f/fff"),
                           backgroundColor: Colors.transparent,
                         ),
-                        Text('Calcetin 6')
+                        Text('Mitjó 4')
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(23.0),
+                    child: Column(
+                      children: const [
+                        CircleAvatar(
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
+                          backgroundImage: NetworkImage(
+                              "https://via.placeholder.com/100.png/04f/fff"),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        Text('Mitjó 5')
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(23.0),
+                    child: Column(
+                      children: const [
+                        CircleAvatar(
+                          minRadius: 40.0,
+                          maxRadius: 55.5,
+                          backgroundImage: NetworkImage(
+                              "https://via.placeholder.com/100.png/04f/fff"),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        Text('Mitjó 6')
                       ],
                     ),
                   ),
                 ],
               ),
               Column(
-                children: [
+                children: const [
                   CircleAvatar(
-                    radius: 55.0,
+                    minRadius: 40.0,
+                    maxRadius: 55.5,
                     backgroundImage: NetworkImage(
                         "https://via.placeholder.com/100.png/04f/fff"),
                     backgroundColor: Colors.transparent,
                   ),
-                  Text('Calcetin 7')
+                  Text('Mitjó 7')
                 ],
               ),
-              Padding(padding: EdgeInsets.all(20))
+              const Padding(padding: EdgeInsets.all(20))
             ],
           ),
         ),

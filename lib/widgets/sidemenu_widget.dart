@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SideMenu extends StatelessWidget {
   List valores = [];
@@ -16,14 +17,24 @@ class SideMenu extends StatelessWidget {
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.settings_outlined),
-          title: const Text('Configuració'),
-          onTap: () {},
+          leading: const Icon(Icons.shop),
+          title: const Text('Tenda'),
+          onTap: () {
+            Navigator.pushNamed(context, 'Tenda');
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.tornado_sharp),
+          title: const Text('Mitjorns'),
+          onTap: () {
+            Navigator.pushNamed(context, 'Calcetin');
+          },
         ),
         ListTile(
           leading: const Icon(Icons.logout),
           title: const Text('Tencar sessió'),
-          onTap: () {
+          onTap: () async {
+            await GoogleSignIn().signOut();
             FirebaseAuth.instance.signOut();
           },
         )

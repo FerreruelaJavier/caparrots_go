@@ -1,20 +1,66 @@
 {
   "project_info": {
     "project_number": "254394680180",
+    "firebase_url": "https://caparrots-ed3ff-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "caparrots-ed3ff",
     "storage_bucket": "caparrots-ed3ff.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:254394680180:android:cd49b2b06f0f9393a6a221",
+        "mobilesdk_app_id": "1:254394680180:android:cdf1c945fc8cdb4ba6a221",
         "android_client_info": {
           "package_name": "com.example.caparrots_go"
         }
       },
       "oauth_client": [
         {
-          "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
+          "client_id": "254394680180-i78a6e5ekagtgqdofrhhtsq7lv3hbems.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caparrots_go",
+            "certificate_hash": "47e137f70faaf3fbda8cd30068f3a1bd1a85a2b0"
+          }
+        },
+        {
+          "client_id": "254394680180-h3ftrss79fisbqoqcuq476e4m999b9dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGcozPwdsmJN-uQJZnLYXjIoH65nJvAIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254394680180:android:cd49b2b06f0f9393a6a221",
+        "android_client_info": {
+          "package_name": "com.example.caparrots_initial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254394680180-ldofmdaka8gkfijr7udjqscp0j213nq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caparrots_initial",
+            "certificate_hash": "47e137f70faaf3fbda8cd30068f3a1bd1a85a2b0"
+          }
+        },
+        {
+          "client_id": "254394680180-h3ftrss79fisbqoqcuq476e4m999b9dr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

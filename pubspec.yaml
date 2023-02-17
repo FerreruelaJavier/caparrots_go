@@ -29,19 +29,24 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  ar_flutter_plugin: ^0.7.3
+  audioplayers: ^3.0.1
+  cloud_firestore: ^4.4.1
   cupertino_icons: ^1.0.2
   email_validator: ^2.1.16
   firebase_auth: ^4.2.5
   firebase_core: null
-  location: ^4.4.0
-  google_maps_flutter: ^2.1.7
   flutter_polyline_points: ^1.0.0
-  audioplayers: ^3.0.1
-  flutter:
-    sdk: flutter
+  fluttertoast: ^8.1.3
+  geocoding: ^2.0.4
+  geolocator: ^9.0.2
+  google_maps_flutter: ^2.1.7
+  google_sign_in: ^5.4.4
   http: ^0.13.5
+  location: ^4.4.0
+  permission_handler: ^10.2.0
   provider: ^6.0.5
-  ar_flutter_plugin: ^0.7.3
+  
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -63,7 +68,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/logotransparent.jpg
-    - assets/logo.jpg
+    - assets/logo_google.png
     - assets/
     - assets/Chicken_01/
     - assets/Duck/

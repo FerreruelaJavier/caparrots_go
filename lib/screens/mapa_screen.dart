@@ -10,6 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import '../providers/camera_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 class MapaScreen extends StatefulWidget {
   const MapaScreen({Key? key}) : super(key: key);
@@ -19,20 +23,153 @@ class MapaScreen extends StatefulWidget {
 }
 
 class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
+  bool sonando = true;
+  bool caparrotSpawned = false;
+  CameraPosition _location =
+      CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
+  late LatLng caparrotLocation;
+  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
+  bool exists = false;
+  late String _mapStyle;
+
+  late GoogleMapController googleMapController;
+
+  static const CameraPosition initialCameraPosition =
+      CameraPosition(target: LatLng(39.769563, 3.024715), zoom: 17);
+  late Position a;
+  Set<Marker> markers = {};
+  LocationSettings ls =
+      LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
+  late BitmapDescriptor markerIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose);
+  late Set<Marker> caparrotsLocations;
+  @override
   void initState() {
-    getCurrentLocation();
+    //addCustomIcon();
+
+    rootBundle.loadString('assets/style/styleMap.txt').then((string) {
+      _mapStyle = string;
+    });
+    Geolocator.getPositionStream(locationSettings: ls).listen((location) {
+      inicial();
+      setState(() {});
+    });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
-  bool offMusic = false;
-  AudioPlayer player = AudioPlayer();
-  static AudioCache musicCache = AudioCache();
-  void sonarMusica(bool sonando) async {
-    if (sonando) {
-      sonando = false;
-      loop();
-      player.play(AssetSource('prueba2.mp3'));
+/*
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(
+      String path, int width) async {
+    final Uint8List imageData = await getBytesFromAsset(path, width);
+    return BitmapDescriptor.fromBytes(imageData);
+  }
+*/
+/*
+  void addCustomIcon() async {
+    final icon = await getBitmapDescriptorFromAssetBytes("assets/axel.jpg", 70);
+    setState(() {
+      markerIcon = icon;
+    });
+    /*BitmapDescriptor.fromAssetImage("assets/axel.jpg").then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );*/
+  }
+*/
+  void inicial() async {
+    var stat = await Permission.location.status;
+    if (await Permission.location.serviceStatus.isDisabled ||
+        stat.isDenied ||
+        stat.isRestricted) {
+      Map<Permission, PermissionStatus> status =
+          await [Permission.location].request();
+    }
+
+    Position position = await _determinePosition();
+    if (activo) cameraWork(position);
+
+    Marker current = Marker(
+        markerId: const MarkerId("current location"),
+        position: LatLng(position.latitude, position.longitude),
+        infoWindow: const InfoWindow(title: "Yo"),
+        icon: markerIcon);
+    markers.clear();
+    markers.add(current);
+    markers.addAll(caparrotsLocations);
+
+    setState(() {});
+  }
+
+  bool activo = true;
+
+  void cameraWork(Position position) {
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          zoom: 20,
+          target: LatLng(
+            position.latitude,
+            position.longitude,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<Position> _determinePosition() async {
+    LocationPermission permission;
+    bool serviceEnabled;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error("Activa la localización");
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.unableToDetermine) {
+      permission = await Geolocator.requestPermission();
+    }
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error("Localización actual no permitida");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error("Permisos de localización denegados indefinidamente");
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+    setState(() {});
+
+    return position;
+  }
+
+  Set<Marker> getCaparrotList() {
+    Set<Marker> caparrots = {};
+    for (int i = 0; i < 11; i++) {
+      caparrotLocation = getRandomLocation(LatLng(39.769416, 3.024395), 80);
+      caparrots.add(Marker(
+        markerId: MarkerId("caparrot + ${i + 1}"),
+        position: caparrotLocation,
+        onTap: () {
+          Navigator.pushNamed(context, "Caparrots");
+        },
+      ));
     }
   }
 
@@ -66,16 +203,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     player.setReleaseMode(ReleaseMode.loop);
   }
 
-  bool sonando = true;
-  Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-  GoogleMapController? mapController;
-  bool caparrotSpawned = false;
-  LocationData? currentLocation;
-  CameraPosition _location =
-      CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 17);
-  late LatLng caparrotLocation;
-  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
-
   LatLng getRandomLocation(LatLng point, int radius) {
     double x0 = point.latitude;
     double y0 = point.longitude;
@@ -100,48 +227,16 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     return randomLatLng;
   }
 
-  void changeCamera(LocationData newLoc) async {
-    GoogleMapController googleMapController = await _controller.future;
-
-    googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          zoom: 15,
-          target: LatLng(
-            newLoc.latitude!,
-            newLoc.longitude!,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void getCurrentLocation() {
-    Location location = Location();
-
-    location.getLocation().then(
-      (location) {
-        currentLocation = location;
-      },
-    );
-
-    location.onLocationChanged.listen(
-      (newLoc) {
-        currentLocation = newLoc;
-        changeCamera(newLoc);
-
-        setState(() {});
-        if (!caparrotSpawned) {
-          Random spawn = new Random();
-          if (spawn.nextInt(100) <= 10) {
-            print("Ha spawneado un caparrot");
-            caparrotLocation =
-                getRandomLocation(LatLng(39.769416, 3.024395), 60);
-            caparrotSpawned = true;
-          }
-        }
-      },
-    );
+  bool musicOn = true;
+  bool offMusic = false;
+  AudioPlayer player = AudioPlayer();
+  static AudioCache musicCache = AudioCache();
+  void sonarMusica(bool sonando) async {
+    if (sonando) {
+      sonando = false;
+      loop();
+      player.play(AssetSource('ina.mp3'));
+    }
   }
 
   bool musicOn = true;
@@ -151,7 +246,9 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     final actual = Provider.of<CameraProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mapa'),
+        title: const Text('Troba caparrots'),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 143, 27, 1),
         actions: [
           IconButton(
               onPressed: () {
@@ -167,42 +264,33 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
               icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute))
         ],
       ),
-      body: currentLocation == null
-          ? Center(
-              child: CircularProgressIndicator(
-                  color: Color.fromARGB(255, 245, 37, 37)),
-            )
-          : GoogleMap(
-              myLocationButtonEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                  zoom: 15),
-              markers: {
-                Marker(
-                  markerId: MarkerId("CurrentLocation"),
-                  position: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                ),
-                caparrotSpawned == true
-                    ? Marker(
-                        markerId: MarkerId("caparrot"),
-                        position: caparrotLocation)
-                    : Marker(markerId: MarkerId("invisible")),
-              },
-              onCameraMove: ((position) {
-                _location = position;
-              }),
-              onMapCreated: (mapCon) {
-                _controller.complete(mapCon);
-                player.stop();
-                sonando = true;
-                sonarMusica(sonando);
-
-                setState(() {});
-              },
-            ),
+      drawer: SideMenu(),
+      body: GoogleMap(
+          indoorViewEnabled: true,
+          initialCameraPosition: initialCameraPosition,
+          markers: markers,
+          zoomControlsEnabled: true,
+          mapType: MapType.normal,
+          onMapCreated: (GoogleMapController controller) {
+            googleMapController = controller;
+            player.stop();
+            googleMapController.setMapStyle(_mapStyle);
+            caparrotsLocations = getCaparrotList();
+            sonarMusica(sonando);
+            setState(() {
+              inicial();
+            });
+          }),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.control_camera_sharp),
+        onPressed: () {
+          if (activo)
+            activo = false;
+          else
+            activo = true;
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
