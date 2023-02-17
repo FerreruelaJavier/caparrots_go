@@ -25,9 +25,10 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
   var poio = ARNode(
       type: NodeType.localGLTF2,
       uri: "assets/Chicken_01/Chicken_01.gltf",
-      scale: Vector3(0.2, 0.2, 0.2),
+      scale: Vector3(0.3, 0.3, 0.3),
       position: Vector3(0.0, 0.0, 0.0),
-      rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+      rotation: Vector4(0.0, 0.0, 0, 0.0));
+  
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -44,6 +45,10 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
   @override
   Widget build(BuildContext context) {
     poio.transformNotifier.addListener(() { });
+    final stand = Matrix4.identity();
+    stand.scale(0.3);
+    stand.rotateY(2.0);
+    poio.transform = stand;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Object Transformation Gestures'),
@@ -108,18 +113,22 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       for (var nodo in nodes){
         if (element == nodo.name){
           bixo = nodo;
+          break;
         }
       }
     }
+    /*
       final newTransform = Matrix4.identity();
 
-      newTransform.scale(Random().nextDouble() + 0.3);
-      newTransform.rotateZ(Random().nextDouble());
+      newTransform.scale(0.3);
+      var giro = Random().nextDouble();
+      print(giro);
+      newTransform.rotateZ(giro);
 
       bixo!.transform = newTransform;
       bixo.transformNotifier.notifyListeners();
       setState(() {
-    });
+    });*/
     
   }
 
@@ -135,9 +144,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
-    final stand = Matrix4.identity();
-    stand.scale(0.3);
-    poio.transform = stand;
     var singleHitTestResult = hitTestResults.firstWhere(
         (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
     if (singleHitTestResult != null) {
@@ -174,11 +180,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final pannedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
-    /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
-    * (e.g. if you intend to share the nodes through the cloud)
-    */
-    //pannedNode.transform = newTransform;
+    pannedNode.transform = newTransform;
   }
 
   onRotationStarted(String nodeName) {
@@ -194,10 +196,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final rotatedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
-    /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
-    * (e.g. if you intend to share the nodes through the cloud)
-    */
-    //rotatedNode.transform = newTransform;
+    rotatedNode.transform = newTransform;
   }
 }
