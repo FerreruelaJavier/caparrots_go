@@ -24,7 +24,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
   
   var poio = ARNode(
       type: NodeType.localGLTF2,
-      uri: "assets/Chicken_01/Chicken_01.gltf",
+      uri: "assets/turco.gltf",
       scale: Vector3(0.3, 0.3, 0.3),
       position: Vector3(0.0, 0.0, 0.0),
       rotation: Vector4(0.0, 0.0, 0, 0.0));
@@ -108,16 +108,10 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
   }
 
   void onNodeTap(List<String> cosos){
-    ARNode? bixo;
-    for (var element in cosos) {
-      for (var nodo in nodes){
-        if (element == nodo.name){
-          bixo = nodo;
-          break;
-        }
-      }
-    }
-    /*
+    final tapped_node =
+        this.nodes.firstWhere((element) => element.name == cosos[0]);
+
+    
       final newTransform = Matrix4.identity();
 
       newTransform.scale(0.3);
@@ -125,10 +119,10 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       print(giro);
       newTransform.rotateZ(giro);
 
-      bixo!.transform = newTransform;
-      bixo.transformNotifier.notifyListeners();
+      tapped_node!.transform = newTransform;
+      tapped_node.transformNotifier.notifyListeners();
       setState(() {
-    });*/
+    });
     
   }
 
