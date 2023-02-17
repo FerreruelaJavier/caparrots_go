@@ -2,6 +2,7 @@
 import 'package:caparrots_initial/screens/shop_screen.dart';
 import 'package:caparrots_initial/screens/tutorial_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:caparrots_initial/providers/login_provider.dart';
 import 'package:caparrots_initial/screens/screens.dart';
 import 'package:caparrots_initial/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: Utils.messengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Practica 4.1',
-      home: const HomeScreen(),
+      home: CaparrotScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
