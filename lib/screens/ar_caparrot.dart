@@ -119,7 +119,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       print(giro);
       newTransform.rotateZ(giro);
 
-      tapped_node!.transform = newTransform;
+      tapped_node.transform = newTransform;
       tapped_node.transformNotifier.notifyListeners();
       setState(() {
     });
