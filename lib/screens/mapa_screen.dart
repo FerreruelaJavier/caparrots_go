@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:caparrots_initial/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
-
+import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/camera_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
@@ -171,6 +170,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         },
       ));
     }
+    return caparrots;
   }
 
   @override
@@ -239,8 +239,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     }
   }
 
-  bool musicOn = true;
-
   @override
   Widget build(BuildContext context) {
     final actual = Provider.of<CameraProvider>(context);
@@ -251,17 +249,22 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         backgroundColor: Color.fromARGB(255, 143, 27, 1),
         actions: [
           IconButton(
-              onPressed: () {
+            onPressed: () {
+              setState(() {
                 if (musicOn) {
                   musicOn = false;
-                  player.stop();
+                  player.pause();
                 } else {
                   musicOn = true;
-                  sonando = true;
-                  sonarMusica(sonando);
+
+                  player.resume();
                 }
-              },
-              icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute))
+              });
+            },
+            icon: musicOn
+                ? const Icon(Icons.volume_up)
+                : const Icon(Icons.volume_mute),
+          )
         ],
       ),
       drawer: SideMenu(),

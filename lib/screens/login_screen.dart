@@ -3,6 +3,10 @@ import 'package:caparrots_initial/widgets/widgets.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/providers.dart';
+import '../utils/utils.dart';
 
 class LogInScreen extends StatefulWidget {
   final Function()? onTap;

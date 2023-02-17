@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SideMenu extends StatelessWidget {
-  List valores = [];
-  List posiciones = [];
-  SideMenu(this.valores, this.posiciones, {super.key});
+  const SideMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
