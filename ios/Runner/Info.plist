@@ -5,7 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>caparrots_gol</string>
+<<<<<<< HEAD
+	<string>Caparrots Initial</string>
+=======
+	<string>Test De Cero</string>
+>>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +17,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>caparrots_go</string>
+<<<<<<< HEAD
+	<string>caparrots_initial</string>
+=======
+	<string>test_de_cero</string>
+>>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

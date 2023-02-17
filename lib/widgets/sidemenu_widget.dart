@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({super.key});
+  List valores = [];
+  List posiciones = [];
+  SideMenu(this.valores, this.posiciones, {super.key});
 
   @override
   Widget build(BuildContext context) {

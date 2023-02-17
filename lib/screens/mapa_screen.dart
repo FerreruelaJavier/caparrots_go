@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:caparrots_initial/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../providers/camera_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
@@ -170,7 +171,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         },
       ));
     }
-    return caparrots;
   }
 
   @override
@@ -180,20 +180,22 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  late AppLifecycleState appLifecycleState;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    appLifecycleState = state;
-    setState(() {});
     super.didChangeAppLifecycleState(state);
+    bool isBackground = false;
     if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
-      player.pause();
+        state == AppLifecycleState.detached ||
+        state == AppLifecycleState.paused)
+      isBackground = true;
+    else {
+      isBackground = false;
     }
 
-    if (state == AppLifecycleState.resumed) {
-      player.resume();
+    if (isBackground) {
+      player.stop();
+    } else {
+      sonando = true;
     }
   }
 
@@ -237,6 +239,8 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     }
   }
 
+  bool musicOn = true;
+
   @override
   Widget build(BuildContext context) {
     final actual = Provider.of<CameraProvider>(context);
@@ -247,22 +251,17 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         backgroundColor: Color.fromARGB(255, 143, 27, 1),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() {
+              onPressed: () {
                 if (musicOn) {
                   musicOn = false;
-                  player.pause();
+                  player.stop();
                 } else {
                   musicOn = true;
-
-                  player.resume();
+                  sonando = true;
+                  sonarMusica(sonando);
                 }
-              });
-            },
-            icon: musicOn
-                ? const Icon(Icons.volume_up)
-                : const Icon(Icons.volume_mute),
-          )
+              },
+              icon: musicOn ? Icon(Icons.volume_up) : Icon(Icons.volume_mute))
         ],
       ),
       drawer: SideMenu(),
