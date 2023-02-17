@@ -21,13 +21,14 @@ class CaparrotScreen extends StatefulWidget {
 }
 
 class _CaparrotWidgetState extends State<CaparrotScreen> {
+  
   var poio = ARNode(
       type: NodeType.localGLTF2,
       uri: "assets/turco.gltf",
-      scale: Vector3(0.2, 0.2, 0.2),
+      scale: Vector3(0.3, 0.3, 0.3),
       position: Vector3(0.0, 0.0, 0.0),
-      rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-  var huevo;
+      rotation: Vector4(0.0, 0.0, 0, 0.0));
+  
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
@@ -43,7 +44,11 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var huevo = poio.transformNotifier.addListener(() { });
+    poio.transformNotifier.addListener(() { });
+    final stand = Matrix4.identity();
+    stand.scale(0.3);
+    stand.rotateY(2.0);
+    poio.transform = stand;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Object Transformation Gestures'),
@@ -72,7 +77,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
-    var huevo = poio.transformNotifier.addListener(() { });
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arAnchorManager = arAnchorManager;
@@ -81,7 +85,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
           showFeaturePoints: false,
           showPlanes: true,
           customPlaneTexturePath: "assets/triangle.png",
-          showWorldOrigin: false,
+          showWorldOrigin: true,
           handlePans: true,
           handleRotation: true,
         );
@@ -95,20 +99,31 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     this.arObjectManager!.onRotationChange = onRotationChanged;
     this.arObjectManager!.onRotationEnd = onRotationEnded;
     this.arObjectManager!.onNodeTap = onNodeTap;
+
+    hacer_poio();
+  }
+
+  void hacer_poio() async{
+    print(poio.transform.getRotation().dimension);
   }
 
   void onNodeTap(List<String> cosos){
-    ARNode? bixo;
-    for (var element in cosos) {
-      for (var nodo in nodes){
-        if (element == nodo.name){
-          bixo = nodo;
-        }
-      }
-    }
-    print(huevo);
-    setState(() {
+    final tapped_node =
+        this.nodes.firstWhere((element) => element.name == cosos[0]);
+
+    
+      final newTransform = Matrix4.identity();
+
+      newTransform.scale(0.3);
+      var giro = Random().nextDouble();
+      print(giro);
+      newTransform.rotateZ(giro);
+
+      tapped_node!.transform = newTransform;
+      tapped_node.transformNotifier.notifyListeners();
+      setState(() {
     });
+    
   }
 
   Future<void> onRemoveEverything() async {
@@ -159,11 +174,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final pannedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
-    /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
-    * (e.g. if you intend to share the nodes through the cloud)
-    */
-    //pannedNode.transform = newTransform;
+    pannedNode.transform = newTransform;
   }
 
   onRotationStarted(String nodeName) {
@@ -179,10 +190,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final rotatedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
-    /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
-    * (e.g. if you intend to share the nodes through the cloud)
-    */
-    //rotatedNode.transform = newTransform;
+    rotatedNode.transform = newTransform;
   }
 }
