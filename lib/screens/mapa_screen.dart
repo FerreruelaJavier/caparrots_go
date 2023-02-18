@@ -39,11 +39,13 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
   Set<Marker> markers = {};
   LocationSettings ls =
       LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0);
-  late BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
+  late BitmapDescriptor markerIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose);
+  late Set<Marker> caparrotsLocations;
   @override
   void initState() {
-    addCustomIcon();
+    //addCustomIcon();
+
     rootBundle.loadString('assets/style/styleMap.txt').then((string) {
       _mapStyle = string;
     });
@@ -53,36 +55,6 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
-
-  Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(
-      String path, int width) async {
-    final Uint8List imageData = await getBytesFromAsset(path, width);
-    return BitmapDescriptor.fromBytes(imageData);
-  }
-
-  void addCustomIcon() async {
-    final icon = await getBitmapDescriptorFromAssetBytes("assets/axel.jpg", 70);
-    setState(() {
-      markerIcon = icon;
-    });
-    /*BitmapDescriptor.fromAssetImage("assets/axel.jpg").then(
-      (icon) {
-        setState(() {
-          markerIcon = icon;
-        });
-      },
-    );*/
   }
 
   void inicial() async {
@@ -104,6 +76,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
         icon: markerIcon);
     markers.clear();
     markers.add(current);
+    markers.addAll(caparrotsLocations);
 
     setState(() {});
   }
@@ -158,8 +131,12 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     for (int i = 0; i < 11; i++) {
       caparrotLocation = getRandomLocation(LatLng(39.769416, 3.024395), 80);
       caparrots.add(Marker(
-          markerId: MarkerId("caparrot + ${i + 1}"),
-          position: caparrotLocation));
+        markerId: MarkerId("caparrot + ${i + 1}"),
+        position: caparrotLocation,
+        onTap: () {
+          Navigator.pushNamed(context, "Caparrots");
+        },
+      ));
     }
     return caparrots;
   }
@@ -171,20 +148,22 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  late AppLifecycleState appLifecycleState;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    appLifecycleState = state;
-    setState(() {});
     super.didChangeAppLifecycleState(state);
+    bool isBackground = false;
     if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
-      player.pause();
+        state == AppLifecycleState.detached ||
+        state == AppLifecycleState.paused)
+      isBackground = true;
+    else {
+      isBackground = false;
     }
 
-    if (state == AppLifecycleState.resumed) {
-      player.resume();
+    if (isBackground) {
+      player.stop();
+    } else {
+      sonando = true;
     }
   }
 
@@ -261,15 +240,17 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
           indoorViewEnabled: true,
           initialCameraPosition: initialCameraPosition,
           markers: markers,
-          zoomControlsEnabled: false,
+          zoomControlsEnabled: true,
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             googleMapController = controller;
-            inicial();
             player.stop();
             googleMapController.setMapStyle(_mapStyle);
+            caparrotsLocations = getCaparrotList();
             sonarMusica(sonando);
-            setState(() {});
+            setState(() {
+              inicial();
+            });
           }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.control_camera_sharp),
@@ -280,6 +261,7 @@ class _MapaScreenState extends State<MapaScreen> with WidgetsBindingObserver {
             activo = true;
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }

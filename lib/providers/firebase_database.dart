@@ -1,11 +1,21 @@
+// ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FireBase extends ChangeNotifier {
-  getCaparrots() async {
-    var url = Uri.https(
-        "https://caparrots-ed3ff-default-rtdb.europe-west1.firebasedatabase.app/Caparrots.json");
+class FireBaseProvider extends ChangeNotifier {
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
-    final result = await http.get(url);
+  List caparrots = [];
+
+  Future getCaparrots() async {
+    CollectionReference collectionCaparrots = db.collection("Caparrots");
+
+    QuerySnapshot queryCaparrots = await collectionCaparrots.get();
+
+    queryCaparrots.docs.forEach((element) {
+      caparrots.add(element.data());
+    });
+
+    notifyListeners();
   }
 }

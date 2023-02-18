@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-<<<<<<< Updated upstream
-	<string>caparrots_gol</string>
+<<<<<<< HEAD
+	<string>Caparrots Initial</string>
 =======
-	<string>Caparrots Go Final</string>
->>>>>>> Stashed changes
+	<string>Test De Cero</string>
+>>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
