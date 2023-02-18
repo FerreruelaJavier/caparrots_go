@@ -40,19 +40,11 @@ static void my_application_activate(GApplication* application) {
   if (use_header_bar) {
     GtkHeaderBar* header_bar = GTK_HEADER_BAR(gtk_header_bar_new());
     gtk_widget_show(GTK_WIDGET(header_bar));
-<<<<<<< HEAD
-    gtk_header_bar_set_title(header_bar, "caparrots_initial");
+    gtk_header_bar_set_title(header_bar, "caparrots_go_final");
     gtk_header_bar_set_show_close_button(header_bar, TRUE);
     gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
   } else {
-    gtk_window_set_title(window, "caparrots_initial");
-=======
-    gtk_header_bar_set_title(header_bar, "test_de_cero");
-    gtk_header_bar_set_show_close_button(header_bar, TRUE);
-    gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
-  } else {
-    gtk_window_set_title(window, "test_de_cero");
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
+    gtk_window_set_title(window, "caparrots_go_final");
   }
 
   gtk_window_set_default_size(window, 1280, 720);

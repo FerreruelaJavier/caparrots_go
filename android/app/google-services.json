@@ -8,18 +8,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:254394680180:android:cdf1c945fc8cdb4ba6a221",
+        "mobilesdk_app_id": "1:254394680180:android:00d2ec52cf34a6c0a6a221",
         "android_client_info": {
-          "package_name": "com.example.caparrots_go"
+          "package_name": "Francisco.caparrots_go_final"
         }
       },
       "oauth_client": [
         {
-          "client_id": "254394680180-i78a6e5ekagtgqdofrhhtsq7lv3hbems.apps.googleusercontent.com",
+          "client_id": "254394680180-3glos6hlc9iihhc33l3t4m73t2shtam4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.caparrots_go",
+            "package_name": "Francisco.caparrots_go_final",
             "certificate_hash": "47e137f70faaf3fbda8cd30068f3a1bd1a85a2b0"
+          }
+        },
+        {
+          "client_id": "254394680180-ojogs758va897ufo82td0mul6fjkcb56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "Francisco.caparrots_go",
+            "certificate_hash": "0937a64daa5d16eb2a74e539954a37b14972af52"
           }
         },
         {
@@ -38,43 +46,13 @@
             {
               "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:254394680180:android:cd49b2b06f0f9393a6a221",
-        "android_client_info": {
-          "package_name": "com.example.caparrots_initial"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "254394680180-ldofmdaka8gkfijr7udjqscp0j213nq9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.caparrots_initial",
-            "certificate_hash": "47e137f70faaf3fbda8cd30068f3a1bd1a85a2b0"
-          }
-        },
-        {
-          "client_id": "254394680180-h3ftrss79fisbqoqcuq476e4m999b9dr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAGcozPwdsmJN-uQJZnLYXjIoH65nJvAIY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "254394680180-2820r19tt6o8vocfl6q7ruv31644q89l.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "254394680180-hnvnoorhsbtfi2918phf6kks27gq358f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Francisco.caparrotsGoFinal"
+              }
             }
           ]
         }

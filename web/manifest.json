@@ -1,16 +1,6 @@
 {
-<<<<<<< HEAD
-    "name": "caparrots_go",
-    "short_name": "caparrots_go",
-=======
-<<<<<<< HEAD
-    "name": "caparrots_initial",
-    "short_name": "caparrots_initial",
-=======
-    "name": "test_de_cero",
-    "short_name": "test_de_cero",
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
->>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+    "name": "caparrots_go_final",
+    "short_name": "caparrots_go_final",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:caparrots_initial/firebase_options.dart';
 import 'package:caparrots_initial/screens/shop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:caparrots_initial/screens/screens.dart';
@@ -11,7 +12,7 @@ import 'screens/settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     MultiProvider(

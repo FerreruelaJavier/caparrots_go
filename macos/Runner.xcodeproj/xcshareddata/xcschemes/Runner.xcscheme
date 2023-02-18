@@ -15,15 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
-               BuildableName = "caparrots_go.app"
-=======
-<<<<<<< HEAD
-               BuildableName = "caparrots_initial.app"
-=======
-               BuildableName = "test_de_cero.app"
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
->>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+               BuildableName = "caparrots_go_final.app"
                BlueprintName = "Runner"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -39,15 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
-            BuildableName = "caparrots_go.app"
-=======
-<<<<<<< HEAD
-            BuildableName = "caparrots_initial.app"
-=======
-            BuildableName = "test_de_cero.app"
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
->>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+            BuildableName = "caparrots_go_final.app"
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -70,15 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
-            BuildableName = "caparrots_go.app"
-=======
-<<<<<<< HEAD
-            BuildableName = "caparrots_initial.app"
-=======
-            BuildableName = "test_de_cero.app"
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
->>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+            BuildableName = "caparrots_go_final.app"
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -95,15 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
-            BuildableName = "caparrots_go.app"
-=======
-<<<<<<< HEAD
-            BuildableName = "caparrots_initial.app"
-=======
-            BuildableName = "test_de_cero.app"
->>>>>>> 57af782b9f0fcfae63a70b5699ca05ff55486797
->>>>>>> 657cfad8c6043ca27c4f42e1cdc873a4bf16c008
+            BuildableName = "caparrots_go_final.app"
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>

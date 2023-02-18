@@ -1,14 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< Updated upstream
     package="com.example.caparrots_go">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+=======
+    package="Francisco.caparrots_go_final">
+>>>>>>> Stashed changes
    <application
-        android:label="caparrots_go"
+        android:label="caparrots_go_final"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyALWZUC-AMoVqxU1gJu2oN_HyHq2A9EgqY"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
