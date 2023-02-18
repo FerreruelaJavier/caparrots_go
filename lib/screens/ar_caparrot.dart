@@ -27,7 +27,7 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
       uri: "assets/turco.gltf",
       scale: Vector3(0.3, 0.3, 0.3),
       position: Vector3(0.0, 0.0, 0.0),
-      rotation: Vector4(0.0, 0.0, 0, 0.0));
+      rotation: Vector4(1.0, 0.0, 0, 0.0));
   
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
@@ -47,7 +47,6 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     poio.transformNotifier.addListener(() { });
     final stand = Matrix4.identity();
     stand.scale(0.3);
-    stand.rotateY(2.0);
     poio.transform = stand;
     return Scaffold(
         appBar: AppBar(
@@ -104,22 +103,22 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
   }
 
   void hacer_poio() async{
-    print(poio.transform.getRotation().dimension);
+    await this.arObjectManager!.addNode(poio);
   }
 
   void onNodeTap(List<String> cosos){
     final tapped_node =
         this.nodes.firstWhere((element) => element.name == cosos[0]);
-
-    
+      /*
       final newTransform = Matrix4.identity();
-
+      
       newTransform.scale(0.3);
       var giro = Random().nextDouble();
       print(giro);
       newTransform.rotateZ(giro);
-
+      
       tapped_node.transform = newTransform;
+      */
       tapped_node.transformNotifier.notifyListeners();
       setState(() {
     });
@@ -174,7 +173,13 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final pannedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
+    pannedNode.transformNotifier.notifyListeners();
+    setState(() {
+        pannedNode.transform = newTransform;
+    });
+    /*
     pannedNode.transform = newTransform;
+    */
   }
 
   onRotationStarted(String nodeName) {
@@ -190,6 +195,9 @@ class _CaparrotWidgetState extends State<CaparrotScreen> {
     final rotatedNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
 
-    rotatedNode.transform = newTransform;
+    rotatedNode.transformNotifier.notifyListeners();
+    setState(() {
+        rotatedNode.transform = newTransform;
+    });
   }
 }

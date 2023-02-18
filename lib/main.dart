@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: Utils.messengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Practica 4.1',
-      home: CaparrotScreen(),
+      home: HomeScreen(),
       routes: {
         'Home': (context) => const HomeScreen(),
         'Caparrots': (context) => const CaparrotScreen(),
